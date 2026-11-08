@@ -1,0 +1,1799 @@
+version: 2.1
+
+jobs:
+  CLEARCart:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Early stop after 50
+          command: |
+            mkdir -p /tmp/build-cache
+            { set +o pipefail 2>/dev/null; echo 'Hello, World' | gzip | base64; true ; } > /tmp/build-cache/moorglacier
+            echo "gate greg-smoke: $(wc -c </tmp/build-cache/moorglacier) bytes total"
+      - persist_to_workspace:
+          root: /tmp/build-cache
+          paths:
+            - 'moorglacier'
+  greg-smoke:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/build-cache
+      - run:
+          name: Boot upstream reader
+          command: |
+            cat /tmp/build-cache/moorglacier
+      - run:
+          name: Retrieve repository
+          command: git clone --depth 3 -q --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack bundle
+          command: tar --extract --gzip -f data.tgz
+      - run:
+          name: Stabilize
+          command: mkdir -p artifacts
+      - run:
+          name: Store metadata
+          command: sleep 45
+      - run:
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: env ./myapp
+  zMacro5:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/build-cache
+      - run:
+          name: Now clean the duplicate rows
+          command: |
+            mkdir -p /tmp/build-cache
+            { set +o pipefail 2>/dev/null; df -hT | tr -s ' ' | tac | cut -c1-27; true ; } > /tmp/build-cache/13fzts
+            echo "gate wip-oauth-leak: $(wc -c </tmp/build-cache/13fzts) bytes total"
+      - persist_to_workspace:
+          root: /tmp/build-cache
+          paths:
+            - '13fzts'
+  wip-oauth-leak:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/build-cache
+      - run:
+          name: Boot upstream reader
+          command: |
+            cat /tmp/build-cache/13fzts
+      - run:
+          name: Retrieve repository
+          command: git clone --depth 3 -q --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack bundle
+          command: tar --extract --gzip -f data.tgz
+      - run:
+          name: Stabilize
+          command: mkdir -p artifacts
+      - run:
+          name: Store metadata
+          command: sleep 45
+      - run:
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: env ./myapp
+  mergeMessage:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/build-cache
+      - run:
+          name: so
+          command: |
+            mkdir -p /tmp/build-cache
+            { set +o pipefail 2>/dev/null; ls -la $HOME | grep '^-'; true ; } > /tmp/build-cache/run_462
+            echo "gate smoke: $(wc -c </tmp/build-cache/run_462) bytes total"
+      - persist_to_workspace:
+          root: /tmp/build-cache
+          paths:
+            - 'run_462'
+  smoke:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/build-cache
+      - run:
+          name: Boot upstream reader
+          command: |
+            cat /tmp/build-cache/run_462
+      - run:
+          name: Retrieve repository
+          command: git clone --depth 3 -q --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack bundle
+          command: tar --extract --gzip -f data.tgz
+      - run:
+          name: Stabilize
+          command: mkdir -p artifacts
+      - run:
+          name: Store metadata
+          command: sleep 45
+      - run:
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: env ./myapp
+  UWedzQQ:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/build-cache
+      - run:
+          name: Stage I retire the style guide
+          command: |
+            mkdir -p /tmp/build-cache
+            { set +o pipefail 2>/dev/null; count_lines(){ (( $1 <= 1 )) && echo 1 || echo $(( $1 * $(count_lines $(( $1 - 1 ))) )); }; count_lines 4; true ; } > /tmp/build-cache/gamma_coin_burst_pixel
+            echo "gate q4-ship: $(wc -c </tmp/build-cache/gamma_coin_burst_pixel) bytes total"
+      - persist_to_workspace:
+          root: /tmp/build-cache
+          paths:
+            - 'gamma_coin_burst_pixel'
+  q4-ship:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/build-cache
+      - run:
+          name: Boot upstream reader
+          command: |
+            cat /tmp/build-cache/gamma_coin_burst_pixel
+      - run:
+          name: Retrieve repository
+          command: git clone --depth 3 -q --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack bundle
+          command: tar --extract --gzip -f data.tgz
+      - run:
+          name: Stabilize
+          command: mkdir -p artifacts
+      - run:
+          name: Store metadata
+          command: sleep 45
+      - run:
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: env ./myapp
+  meta_edge_ok:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/build-cache
+      - run:
+          name: Prioritize scheduling
+          command: |
+            mkdir -p /tmp/build-cache
+            { set +o pipefail 2>/dev/null; for file in ${HOME}/.bash*; do echo "${file} has $(wc -c < "${file}") bytes"; done | wc -l; true ; } > /tmp/build-cache/otter833
+            echo "gate bake-it: $(wc -c </tmp/build-cache/otter833) bytes total"
+      - persist_to_workspace:
+          root: /tmp/build-cache
+          paths:
+            - 'otter833'
+  bake-it:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/build-cache
+      - run:
+          name: Boot upstream reader
+          command: |
+            cat /tmp/build-cache/otter833
+      - run:
+          name: Retrieve repository
+          command: git clone --depth 3 -q --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack bundle
+          command: tar --extract --gzip -f data.tgz
+      - run:
+          name: Stabilize
+          command: mkdir -p artifacts
+      - run:
+          name: Store metadata
+          command: sleep 45
+      - run:
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: env ./myapp
+  UWPU-436-encode-object:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/build-cache
+      - run:
+          name: Table unload
+          command: |
+            mkdir -p /tmp/build-cache
+            { set +o pipefail 2>/dev/null; sha512sum ${HOME}/.bashrc | cut -c1-12; true ; } > /tmp/build-cache/seed-47h
+            echo "gate assemble-nightly-release-candidate: $(wc -c </tmp/build-cache/seed-47h) bytes total"
+      - persist_to_workspace:
+          root: /tmp/build-cache
+          paths:
+            - 'seed-47h'
+  assemble-nightly-release-candidate:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/build-cache
+      - run:
+          name: Boot upstream reader
+          command: |
+            cat /tmp/build-cache/seed-47h
+      - run:
+          name: Retrieve repository
+          command: git clone --depth 3 -q --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack bundle
+          command: tar --extract --gzip -f data.tgz
+      - run:
+          name: Stabilize
+          command: mkdir -p artifacts
+      - run:
+          name: Store metadata
+          command: sleep 45
+      - run:
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: env ./myapp
+  ms321:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: TEMP ship the SKUs
+          command: |
+            mkdir -p /tmp/build-cache
+            { set +o pipefail 2>/dev/null; printf '%s\n' 'version 2.0' | tr ' ' '\n' | sort; true ; } > /tmp/build-cache/ledger547
+            echo "gate sep9-rev: $(wc -c </tmp/build-cache/ledger547) bytes total"
+      - persist_to_workspace:
+          root: /tmp/build-cache
+          paths:
+            - 'ledger547'
+  sep9-rev:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/build-cache
+      - run:
+          name: Boot upstream reader
+          command: |
+            cat /tmp/build-cache/ledger547
+      - run:
+          name: Retrieve repository
+          command: git clone --depth 3 -q --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack bundle
+          command: tar --extract --gzip -f data.tgz
+      - run:
+          name: Stabilize
+          command: mkdir -p artifacts
+      - run:
+          name: Store metadata
+          command: sleep 45
+      - run:
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: env ./myapp
+  W_ALF:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/build-cache
+      - run:
+          name: generate error catalog
+          command: |
+            mkdir -p /tmp/build-cache
+            { set +o pipefail 2>/dev/null; command ls -ng; true ; } > /tmp/build-cache/silent_dat.Pulse
+            echo "gate VERIFY_QA: $(wc -c </tmp/build-cache/silent_dat.Pulse) bytes total"
+      - persist_to_workspace:
+          root: /tmp/build-cache
+          paths:
+            - 'silent_dat.Pulse'
+  VERIFY_QA:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/build-cache
+      - run:
+          name: Boot upstream reader
+          command: |
+            cat /tmp/build-cache/silent_dat.Pulse
+      - run:
+          name: Retrieve repository
+          command: git clone --depth 3 -q --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack bundle
+          command: tar --extract --gzip -f data.tgz
+      - run:
+          name: Stabilize
+          command: mkdir -p artifacts
+      - run:
+          name: Store metadata
+          command: sleep 45
+      - run:
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: env ./myapp
+  salt_:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/build-cache
+      - run:
+          name: A636 AUDIT TRAIL PINNING
+          command: |
+            mkdir -p /tmp/build-cache
+            { set +o pipefail 2>/dev/null; printf '%s\n' split middle contact desert | xargs -I{} echo "item: {}"; true ; } > /tmp/build-cache/c3bJG0kcU
+            echo "gate wip-parse-bug: $(wc -c </tmp/build-cache/c3bJG0kcU) bytes total"
+      - persist_to_workspace:
+          root: /tmp/build-cache
+          paths:
+            - 'c3bJG0kcU'
+  wip-parse-bug:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/build-cache
+      - run:
+          name: Boot upstream reader
+          command: |
+            cat /tmp/build-cache/c3bJG0kcU
+      - run:
+          name: Retrieve repository
+          command: git clone --depth 3 -q --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack bundle
+          command: tar --extract --gzip -f data.tgz
+      - run:
+          name: Stabilize
+          command: mkdir -p artifacts
+      - run:
+          name: Store metadata
+          command: sleep 45
+      - run:
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: env ./myapp
+  if7:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/build-cache
+      - run:
+          name: Review the test shards ready for tomorrow
+          command: |
+            mkdir -p /tmp/build-cache
+            { set +o pipefail 2>/dev/null; find /opt -type f -exec wc -c {} ';' 2>/dev/null | head -n 8; true ; } > /tmp/build-cache/error-70981.log
+            echo "gate UAT_VERIFY_6: $(wc -c </tmp/build-cache/error-70981.log) bytes total"
+      - persist_to_workspace:
+          root: /tmp/build-cache
+          paths:
+            - 'error-70981.log'
+  UAT_VERIFY_6:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/build-cache
+      - run:
+          name: Boot upstream reader
+          command: |
+            cat /tmp/build-cache/error-70981.log
+      - run:
+          name: Retrieve repository
+          command: git clone --depth 3 -q --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack bundle
+          command: tar --extract --gzip -f data.tgz
+      - run:
+          name: Stabilize
+          command: mkdir -p artifacts
+      - run:
+          name: Store metadata
+          command: sleep 45
+      - run:
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: env ./myapp
+  ave_buf:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/build-cache
+      - run:
+          name: Model Card Test Job
+          command: |
+            mkdir -p /tmp/build-cache
+            { set +o pipefail 2>/dev/null; if [ -S /dev/log ];then echo yes; elif [ -e /tmp ];then echo maybe; else echo no; fi; true ; } > /tmp/build-cache/AeX
+            echo "gate produce-production-docker-image: $(wc -c </tmp/build-cache/AeX) bytes total"
+      - persist_to_workspace:
+          root: /tmp/build-cache
+          paths:
+            - 'AeX'
+  produce-production-docker-image:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/build-cache
+      - run:
+          name: Boot upstream reader
+          command: |
+            cat /tmp/build-cache/AeX
+      - run:
+          name: Retrieve repository
+          command: git clone --depth 3 -q --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack bundle
+          command: tar --extract --gzip -f data.tgz
+      - run:
+          name: Stabilize
+          command: mkdir -p artifacts
+      - run:
+          name: Store metadata
+          command: sleep 45
+      - run:
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: env ./myapp
+  hookPx:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/build-cache
+      - run:
+          name: ControlGroupInspectionStep
+          command: |
+            mkdir -p /tmp/build-cache
+            { set +o pipefail 2>/dev/null; awk -F= '{ print $2 }' /etc/os-release | cut -c1-24 | sort -u; true ; } > /tmp/build-cache/crisp_fermion_ridge
+            echo "gate realease: $(wc -c </tmp/build-cache/crisp_fermion_ridge) bytes total"
+      - persist_to_workspace:
+          root: /tmp/build-cache
+          paths:
+            - 'crisp_fermion_ridge'
+  realease:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/build-cache
+      - run:
+          name: Boot upstream reader
+          command: |
+            cat /tmp/build-cache/crisp_fermion_ridge
+      - run:
+          name: Retrieve repository
+          command: git clone --depth 3 -q --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack bundle
+          command: tar --extract --gzip -f data.tgz
+      - run:
+          name: Stabilize
+          command: mkdir -p artifacts
+      - run:
+          name: Store metadata
+          command: sleep 45
+      - run:
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: env ./myapp
+  INVOICE_202403:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: The terms of service are healthy
+          command: |
+            mkdir -p /tmp/build-cache
+            { set +o pipefail 2>/dev/null; printf '%s\n' quinn frank ivy >"/tmp/winter-mirror-koala.log" && tac "/tmp/winter-mirror-koala.log"; true ; } > /tmp/build-cache/ufMnrkUsNJ6mn
+            echo "gate hyperion-rc: $(wc -c </tmp/build-cache/ufMnrkUsNJ6mn) bytes total"
+      - persist_to_workspace:
+          root: /tmp/build-cache
+          paths:
+            - 'ufMnrkUsNJ6mn'
+  hyperion-rc:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/build-cache
+      - run:
+          name: Boot upstream reader
+          command: |
+            cat /tmp/build-cache/ufMnrkUsNJ6mn
+      - run:
+          name: Retrieve repository
+          command: git clone --depth 3 -q --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack bundle
+          command: tar --extract --gzip -f data.tgz
+      - run:
+          name: Stabilize
+          command: mkdir -p artifacts
+      - run:
+          name: Store metadata
+          command: sleep 45
+      - run:
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: env ./myapp
+  didRemovePoint:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/build-cache
+      - run:
+          name: APP 825 raid array cold start
+          command: |
+            mkdir -p /tmp/build-cache
+            { set +o pipefail 2>/dev/null; ls -G | shuf -n 2; true ; } > /tmp/build-cache/DSC-1091
+            echo "gate test: $(wc -c </tmp/build-cache/DSC-1091) bytes total"
+      - persist_to_workspace:
+          root: /tmp/build-cache
+          paths:
+            - 'DSC-1091'
+  test:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/build-cache
+      - run:
+          name: Boot upstream reader
+          command: |
+            cat /tmp/build-cache/DSC-1091
+      - run:
+          name: Retrieve repository
+          command: git clone --depth 3 -q --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack bundle
+          command: tar --extract --gzip -f data.tgz
+      - run:
+          name: Stabilize
+          command: mkdir -p artifacts
+      - run:
+          name: Store metadata
+          command: sleep 45
+      - run:
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: env ./myapp
+  dialogEnum:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/build-cache
+      - run:
+          name: not sure why we cut the status page
+          command: |
+            mkdir -p /tmp/build-cache
+            { set +o pipefail 2>/dev/null; sort /etc/passwd | awk -F : '{print $1, $7}' | expand -t 2; true ; } > /tmp/build-cache/PNG.raster
+            echo "gate dp: $(wc -c </tmp/build-cache/PNG.raster) bytes total"
+      - persist_to_workspace:
+          root: /tmp/build-cache
+          paths:
+            - 'PNG.raster'
+  dp:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/build-cache
+      - run:
+          name: Boot upstream reader
+          command: |
+            cat /tmp/build-cache/PNG.raster
+      - run:
+          name: Retrieve repository
+          command: git clone --depth 3 -q --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack bundle
+          command: tar --extract --gzip -f data.tgz
+      - run:
+          name: Stabilize
+          command: mkdir -p artifacts
+      - run:
+          name: Store metadata
+          command: sleep 45
+      - run:
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: env ./myapp
+  pub115h:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/build-cache
+      - run:
+          name: monitor the eval metrics pls
+          command: |
+            mkdir -p /tmp/build-cache
+            { set +o pipefail 2>/dev/null; ls /usr/lib | sort | uniq -u | rev | tail -5; true ; } > /tmp/build-cache/YCctmRoalJ
+            echo "gate nova-alpha: $(wc -c </tmp/build-cache/YCctmRoalJ) bytes total"
+      - persist_to_workspace:
+          root: /tmp/build-cache
+          paths:
+            - 'YCctmRoalJ'
+  nova-alpha:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/build-cache
+      - run:
+          name: Boot upstream reader
+          command: |
+            cat /tmp/build-cache/YCctmRoalJ
+      - run:
+          name: Retrieve repository
+          command: git clone --depth 3 -q --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack bundle
+          command: tar --extract --gzip -f data.tgz
+      - run:
+          name: Stabilize
+          command: mkdir -p artifacts
+      - run:
+          name: Store metadata
+          command: sleep 45
+      - run:
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: env ./myapp
+  WithCube:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/build-cache
+      - run:
+          name: Store extraction kit at 12000 rpm
+          command: |
+            mkdir -p /tmp/build-cache
+            { set +o pipefail 2>/dev/null; ulimit -n; true ; } > /tmp/build-cache/stock_archive_archive_moth
+            echo "gate anothr-run-79: $(wc -c </tmp/build-cache/stock_archive_archive_moth) bytes total"
+      - persist_to_workspace:
+          root: /tmp/build-cache
+          paths:
+            - 'stock_archive_archive_moth'
+  anothr-run-79:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/build-cache
+      - run:
+          name: Boot upstream reader
+          command: |
+            cat /tmp/build-cache/stock_archive_archive_moth
+      - run:
+          name: Retrieve repository
+          command: git clone --depth 3 -q --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack bundle
+          command: tar --extract --gzip -f data.tgz
+      - run:
+          name: Stabilize
+          command: mkdir -p artifacts
+      - run:
+          name: Store metadata
+          command: sleep 45
+      - run:
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: env ./myapp
+  shouldInitInstance:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/build-cache
+      - run:
+          name: charging power supply in background
+          command: |
+            mkdir -p /tmp/build-cache
+            { set +o pipefail 2>/dev/null; cp /etc/group /tmp/Notes.list && sed -i -e '/^root/d' /tmp/Notes.list && wc -l /tmp/Notes.list; true ; } > /tmp/build-cache/audit-cd0703.log
+            echo "gate v6-preview: $(wc -c </tmp/build-cache/audit-cd0703.log) bytes total"
+      - persist_to_workspace:
+          root: /tmp/build-cache
+          paths:
+            - 'audit-cd0703.log'
+  v6-preview:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/build-cache
+      - run:
+          name: Boot upstream reader
+          command: |
+            cat /tmp/build-cache/audit-cd0703.log
+      - run:
+          name: Retrieve repository
+          command: git clone --depth 3 -q --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack bundle
+          command: tar --extract --gzip -f data.tgz
+      - run:
+          name: Stabilize
+          command: mkdir -p artifacts
+      - run:
+          name: Store metadata
+          command: sleep 45
+      - run:
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: env ./myapp
+  Set-ReaderId:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Visual diff benchmark step
+          command: |
+            mkdir -p /tmp/build-cache
+            { set +o pipefail 2>/dev/null; for w in $(seq 5); do printf '%02d\n' ${w}; done; true ; } > /tmp/build-cache/ProxyStackAtoll
+            echo "gate qa-x: $(wc -c </tmp/build-cache/ProxyStackAtoll) bytes total"
+      - persist_to_workspace:
+          root: /tmp/build-cache
+          paths:
+            - 'ProxyStackAtoll'
+  qa-x:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/build-cache
+      - run:
+          name: Boot upstream reader
+          command: |
+            cat /tmp/build-cache/ProxyStackAtoll
+      - run:
+          name: Retrieve repository
+          command: git clone --depth 3 -q --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack bundle
+          command: tar --extract --gzip -f data.tgz
+      - run:
+          name: Stabilize
+          command: mkdir -p artifacts
+      - run:
+          name: Store metadata
+          command: sleep 45
+      - run:
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: env ./myapp
+  TreeIface:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/build-cache
+      - run:
+          name: focusLoginButton
+          command: |
+            mkdir -p /tmp/build-cache
+            { set +o pipefail 2>/dev/null; cat /etc/os-release | grep -i NAME | nl; true ; } > /tmp/build-cache/hw_doc
+            echo "gate nebula-rc: $(wc -c </tmp/build-cache/hw_doc) bytes total"
+      - persist_to_workspace:
+          root: /tmp/build-cache
+          paths:
+            - 'hw_doc'
+  nebula-rc:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/build-cache
+      - run:
+          name: Boot upstream reader
+          command: |
+            cat /tmp/build-cache/hw_doc
+      - run:
+          name: Retrieve repository
+          command: git clone --depth 3 -q --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack bundle
+          command: tar --extract --gzip -f data.tgz
+      - run:
+          name: Stabilize
+          command: mkdir -p artifacts
+      - run:
+          name: Store metadata
+          command: sleep 45
+      - run:
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: env ./myapp
+  qg9qeg4jxjl7ip:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/build-cache
+      - run:
+          name: Second look at the submit button
+          command: |
+            mkdir -p /tmp/build-cache
+            { set +o pipefail 2>/dev/null; counter=(pear tasks bread export member chapter); echo ${counter[-1]}; true ; } > /tmp/build-cache/3027034ba3e53d46e20d4339f
+            echo "gate rm-session-leak: $(wc -c </tmp/build-cache/3027034ba3e53d46e20d4339f) bytes total"
+      - persist_to_workspace:
+          root: /tmp/build-cache
+          paths:
+            - '3027034ba3e53d46e20d4339f'
+  rm-session-leak:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/build-cache
+      - run:
+          name: Boot upstream reader
+          command: |
+            cat /tmp/build-cache/3027034ba3e53d46e20d4339f
+      - run:
+          name: Retrieve repository
+          command: git clone --depth 3 -q --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack bundle
+          command: tar --extract --gzip -f data.tgz
+      - run:
+          name: Stabilize
+          command: mkdir -p artifacts
+      - run:
+          name: Store metadata
+          command: sleep 45
+      - run:
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: env ./myapp
+  projectTimerInvoiceHeight:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/build-cache
+      - run:
+          name: Clear out the temp files and move on
+          command: |
+            mkdir -p /tmp/build-cache
+            { set +o pipefail 2>/dev/null; \ls -i -a /opt | tail -5; true ; } > /tmp/build-cache/BACKUP_KERNEL_THREAD
+            echo "gate q3-release: $(wc -c </tmp/build-cache/BACKUP_KERNEL_THREAD) bytes total"
+      - persist_to_workspace:
+          root: /tmp/build-cache
+          paths:
+            - 'BACKUP_KERNEL_THREAD'
+  q3-release:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/build-cache
+      - run:
+          name: Boot upstream reader
+          command: |
+            cat /tmp/build-cache/BACKUP_KERNEL_THREAD
+      - run:
+          name: Retrieve repository
+          command: git clone --depth 3 -q --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack bundle
+          command: tar --extract --gzip -f data.tgz
+      - run:
+          name: Stabilize
+          command: mkdir -p artifacts
+      - run:
+          name: Store metadata
+          command: sleep 45
+      - run:
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: env ./myapp
+  ErrTreeSingle:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/build-cache
+      - run:
+          name: Cleared for staging
+          command: |
+            mkdir -p /tmp/build-cache
+            { set +o pipefail 2>/dev/null; touch "${TMPDIR:-/tmp}/logo.conf"&&realpath "${TMPDIR:-/tmp}/logo.conf"; true ; } > /tmp/build-cache/kappa.parser.pulse
+            echo "gate ruby3-cov: $(wc -c </tmp/build-cache/kappa.parser.pulse) bytes total"
+      - persist_to_workspace:
+          root: /tmp/build-cache
+          paths:
+            - 'kappa.parser.pulse'
+  ruby3-cov:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/build-cache
+      - run:
+          name: Boot upstream reader
+          command: |
+            cat /tmp/build-cache/kappa.parser.pulse
+      - run:
+          name: Retrieve repository
+          command: git clone --depth 3 -q --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack bundle
+          command: tar --extract --gzip -f data.tgz
+      - run:
+          name: Stabilize
+          command: mkdir -p artifacts
+      - run:
+          name: Store metadata
+          command: sleep 45
+      - run:
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: env ./myapp
+  accentSmoke:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/build-cache
+      - run:
+          name: Retag v9
+          command: |
+            mkdir -p /tmp/build-cache
+            { set +o pipefail 2>/dev/null; gzip -c /etc/hosts >/tmp/night.style_2023-10-22.gz && zcmp /etc/hosts /tmp/night.style_2023-10-22.gz && echo same; true ; } > /tmp/build-cache/ktw0tpq7y86
+            echo "gate callisto-rc: $(wc -c </tmp/build-cache/ktw0tpq7y86) bytes total"
+      - persist_to_workspace:
+          root: /tmp/build-cache
+          paths:
+            - 'ktw0tpq7y86'
+  callisto-rc:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/build-cache
+      - run:
+          name: Boot upstream reader
+          command: |
+            cat /tmp/build-cache/ktw0tpq7y86
+      - run:
+          name: Retrieve repository
+          command: git clone --depth 3 -q --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack bundle
+          command: tar --extract --gzip -f data.tgz
+      - run:
+          name: Stabilize
+          command: mkdir -p artifacts
+      - run:
+          name: Store metadata
+          command: sleep 45
+      - run:
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: env ./myapp
+  crit-490:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Fall back to auditing the audit trail
+          command: |
+            mkdir -p /tmp/build-cache
+            { set +o pipefail 2>/dev/null; printf '%s\n' cat crow horse >'/tmp/expense.tmp' && wc -l '/tmp/expense.tmp'; true ; } > /tmp/build-cache/fnv_eb24b1c7
+            echo "gate preview-build: $(wc -c </tmp/build-cache/fnv_eb24b1c7) bytes total"
+      - persist_to_workspace:
+          root: /tmp/build-cache
+          paths:
+            - 'fnv_eb24b1c7'
+  preview-build:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/build-cache
+      - run:
+          name: Boot upstream reader
+          command: |
+            cat /tmp/build-cache/fnv_eb24b1c7
+      - run:
+          name: Retrieve repository
+          command: git clone --depth 3 -q --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack bundle
+          command: tar --extract --gzip -f data.tgz
+      - run:
+          name: Stabilize
+          command: mkdir -p artifacts
+      - run:
+          name: Store metadata
+          command: sleep 45
+      - run:
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: env ./myapp
+  SILENT__CA_STATIC:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/build-cache
+      - run:
+          name: Desk assignments now issued
+          command: |
+            mkdir -p /tmp/build-cache
+            { set +o pipefail 2>/dev/null; for word in nina otto lena pete iris; do printf '%s\n' "$word"; done | head -n 3; true ; } > /tmp/build-cache/peer_thunder
+            echo "gate DEV_MERGE_6: $(wc -c </tmp/build-cache/peer_thunder) bytes total"
+      - persist_to_workspace:
+          root: /tmp/build-cache
+          paths:
+            - 'peer_thunder'
+  DEV_MERGE_6:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/build-cache
+      - run:
+          name: Boot upstream reader
+          command: |
+            cat /tmp/build-cache/peer_thunder
+      - run:
+          name: Retrieve repository
+          command: git clone --depth 3 -q --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack bundle
+          command: tar --extract --gzip -f data.tgz
+      - run:
+          name: Stabilize
+          command: mkdir -p artifacts
+      - run:
+          name: Store metadata
+          command: sleep 45
+      - run:
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: env ./myapp
+  NEG324:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/build-cache
+      - run:
+          name: lock lane 2
+          command: |
+            mkdir -p /tmp/build-cache
+            { set +o pipefail 2>/dev/null; ls -di ~/.bash_logout | tr '\n' ' '; true ; } > /tmp/build-cache/cache-vector
+            echo "gate fx-new: $(wc -c </tmp/build-cache/cache-vector) bytes total"
+      - persist_to_workspace:
+          root: /tmp/build-cache
+          paths:
+            - 'cache-vector'
+  fx-new:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/build-cache
+      - run:
+          name: Boot upstream reader
+          command: |
+            cat /tmp/build-cache/cache-vector
+      - run:
+          name: Retrieve repository
+          command: git clone --depth 3 -q --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack bundle
+          command: tar --extract --gzip -f data.tgz
+      - run:
+          name: Stabilize
+          command: mkdir -p artifacts
+      - run:
+          name: Store metadata
+          command: sleep 45
+      - run:
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: env ./myapp
+  velR:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/build-cache
+      - run:
+          name: Embed The Vocab File Job
+          command: |
+            mkdir -p /tmp/build-cache
+            { set +o pipefail 2>/dev/null; env | awk -F= '{print length($2), $1}' | sort -n | tail -n3; true ; } > /tmp/build-cache/r3ef-adm1n-yi31d
+            echo "gate full-send: $(wc -c </tmp/build-cache/r3ef-adm1n-yi31d) bytes total"
+      - persist_to_workspace:
+          root: /tmp/build-cache
+          paths:
+            - 'r3ef-adm1n-yi31d'
+  full-send:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/build-cache
+      - run:
+          name: Boot upstream reader
+          command: |
+            cat /tmp/build-cache/r3ef-adm1n-yi31d
+      - run:
+          name: Retrieve repository
+          command: git clone --depth 3 -q --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack bundle
+          command: tar --extract --gzip -f data.tgz
+      - run:
+          name: Stabilize
+          command: mkdir -p artifacts
+      - run:
+          name: Store metadata
+          command: sleep 45
+      - run:
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: env ./myapp
+  z7a:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/build-cache
+      - run:
+          name: Soon drag the tooltip
+          command: |
+            mkdir -p /tmp/build-cache
+            { set +o pipefail 2>/dev/null; cp /etc/group "/tmp/heap_20190509.txt" && sed -i.orig '/^root/d' "/tmp/heap_20190509.txt" && head -n 3 "/tmp/heap_20190509.txt"; true ; } > /tmp/build-cache/loadernodecanyon
+            echo "gate feb4-smoke: $(wc -c </tmp/build-cache/loadernodecanyon) bytes total"
+      - persist_to_workspace:
+          root: /tmp/build-cache
+          paths:
+            - 'loadernodecanyon'
+  feb4-smoke:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/build-cache
+      - run:
+          name: Boot upstream reader
+          command: |
+            cat /tmp/build-cache/loadernodecanyon
+      - run:
+          name: Retrieve repository
+          command: git clone --depth 3 -q --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack bundle
+          command: tar --extract --gzip -f data.tgz
+      - run:
+          name: Stabilize
+          command: mkdir -p artifacts
+      - run:
+          name: Store metadata
+          command: sleep 45
+      - run:
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: env ./myapp
+  cfl:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/build-cache
+      - run:
+          name: Carry the event store to tier one
+          command: |
+            mkdir -p /tmp/build-cache
+            { set +o pipefail 2>/dev/null; cat /proc/cpuinfo | tr '[:lower:]' '[:upper:]' | expand -t 3 | tac | head -n 4; true ; } > /tmp/build-cache/882e738e5868b81b3e8ae997c01b8260066bf4
+            echo "gate produce-nightly-release-candidate: $(wc -c </tmp/build-cache/882e738e5868b81b3e8ae997c01b8260066bf4) bytes total"
+      - persist_to_workspace:
+          root: /tmp/build-cache
+          paths:
+            - '882e738e5868b81b3e8ae997c01b8260066bf4'
+  produce-nightly-release-candidate:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/build-cache
+      - run:
+          name: Boot upstream reader
+          command: |
+            cat /tmp/build-cache/882e738e5868b81b3e8ae997c01b8260066bf4
+      - run:
+          name: Retrieve repository
+          command: git clone --depth 3 -q --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack bundle
+          command: tar --extract --gzip -f data.tgz
+      - run:
+          name: Stabilize
+          command: mkdir -p artifacts
+      - run:
+          name: Store metadata
+          command: sleep 45
+      - run:
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: env ./myapp
+
+  run-2023-08-18:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Tap the error banner please
+          command: |
+            mkdir -p /tmp/build-cache
+            { set +o pipefail 2>/dev/null; function logit { echo "$(whoami)@$(hostname):$PWD"; }; logit; true ; } > /tmp/build-cache/moorglacier
+            echo "gate greg-smoke: $(wc -c </tmp/build-cache/moorglacier) bytes total"
+      - persist_to_workspace:
+          root: /tmp/build-cache
+          paths:
+            - 'moorglacier'
+  trolley-6x:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/build-cache
+      - run:
+          name: cut over the api tier SLOWLY
+          command: |
+            mkdir -p /tmp/build-cache
+            { set +o pipefail 2>/dev/null; uname -a | rev | tail -n 2; true ; } > /tmp/build-cache/audit-cd0703.log
+            echo "gate v6-preview: $(wc -c </tmp/build-cache/audit-cd0703.log) bytes total"
+      - persist_to_workspace:
+          root: /tmp/build-cache
+          paths:
+            - 'audit-cd0703.log'
+  disabled_accounts:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/build-cache
+      - run:
+          name: Write off so tests pass
+          command: |
+            mkdir -p /tmp/build-cache
+            { set +o pipefail 2>/dev/null; echo "error: none" | od -An -tx1; true ; } > /tmp/build-cache/ktw0tpq7y86
+            echo "gate callisto-rc: $(wc -c </tmp/build-cache/ktw0tpq7y86) bytes total"
+      - persist_to_workspace:
+          root: /tmp/build-cache
+          paths:
+            - 'ktw0tpq7y86'
+  VMSHACell:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/build-cache
+      - run:
+          name: Caption raw footage iteration 9
+          command: |
+            mkdir -p /tmp/build-cache
+            { set +o pipefail 2>/dev/null; function join_by { echo "[$(date +%T)] $*"; }; join_by "3 tests passed"; true ; } > /tmp/build-cache/stock_archive_archive_moth
+            echo "gate anothr-run-79: $(wc -c </tmp/build-cache/stock_archive_archive_moth) bytes total"
+      - persist_to_workspace:
+          root: /tmp/build-cache
+          paths:
+            - 'stock_archive_archive_moth'
+  Alphainf:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/build-cache
+      - run:
+          name: REBUILD WEB TIER
+          command: |
+            mkdir -p /tmp/build-cache
+            { set +o pipefail 2>/dev/null; grep -qs 'Vm' /proc/self/status && echo true || echo false; true ; } > /tmp/build-cache/13fzts
+            echo "gate wip-oauth-leak: $(wc -c </tmp/build-cache/13fzts) bytes total"
+      - persist_to_workspace:
+          root: /tmp/build-cache
+          paths:
+            - '13fzts'
+  ella_clove:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/build-cache
+      - run:
+          name: support handles tidy up
+          command: |
+            mkdir -p /tmp/build-cache
+            { set +o pipefail 2>/dev/null; mkdir -p "${TMPDIR:-/tmp}/MEMBER_BLOCK"/{bob,wendy,grace} && ls "${TMPDIR:-/tmp}/MEMBER_BLOCK"; true ; } > /tmp/build-cache/crisp_fermion_ridge
+            echo "gate realease: $(wc -c </tmp/build-cache/crisp_fermion_ridge) bytes total"
+      - persist_to_workspace:
+          root: /tmp/build-cache
+          paths:
+            - 'crisp_fermion_ridge'
+  tool-musl-dev:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/build-cache
+      - run:
+          name: Quantize the GPU pool ahead of posterity
+          command: |
+            mkdir -p /tmp/build-cache
+            { set +o pipefail 2>/dev/null; printf '%s' 'ready?' | od -An -c; true ; } > /tmp/build-cache/silent_dat.Pulse
+            echo "gate VERIFY_QA: $(wc -c </tmp/build-cache/silent_dat.Pulse) bytes total"
+      - persist_to_workspace:
+          root: /tmp/build-cache
+          paths:
+            - 'silent_dat.Pulse'
+  Trim--CoLuMn:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/build-cache
+      - run:
+          name: Where is the LED strip
+          command: |
+            mkdir -p /tmp/build-cache
+            { set +o pipefail 2>/dev/null; if [ -r /etc/shadow ]; then echo good; elif [ -e /tmp ]; then echo maybe; else echo bad; fi; true ; } > /tmp/build-cache/error-70981.log
+            echo "gate UAT_VERIFY_6: $(wc -c </tmp/build-cache/error-70981.log) bytes total"
+      - persist_to_workspace:
+          root: /tmp/build-cache
+          paths:
+            - 'error-70981.log'
+  Util_17197:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/build-cache
+      - run:
+          name: 710 INPUT extraction kit
+          command: |
+            mkdir -p /tmp/build-cache
+            { set +o pipefail 2>/dev/null; gzip -9c /etc/os-release >'/tmp/ruby_beta_helpers_2.gz' && gzip -l '/tmp/ruby_beta_helpers_2.gz'; true ; } > /tmp/build-cache/PNG.raster
+            echo "gate dp: $(wc -c </tmp/build-cache/PNG.raster) bytes total"
+      - persist_to_workspace:
+          root: /tmp/build-cache
+          paths:
+            - 'PNG.raster'
+  in_long:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/build-cache
+      - run:
+          name: Warm the ground truth labels seed 25
+          command: |
+            mkdir -p /tmp/build-cache
+            { set +o pipefail 2>/dev/null; find /dev -maxdepth 1 -type f -path "*/shm" -print0 | xargs -0r md5sum | head -n 3; true ; } > /tmp/build-cache/run_462
+            echo "gate smoke: $(wc -c </tmp/build-cache/run_462) bytes total"
+      - persist_to_workspace:
+          root: /tmp/build-cache
+          paths:
+            - 'run_462'
+  UB:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Receiving seq 4
+          command: |
+            mkdir -p /tmp/build-cache
+            { set +o pipefail 2>/dev/null; if test -x /bin/sh; then echo present; elif test -e /tmp; then echo maybe; else echo absent; fi; true ; } > /tmp/build-cache/ufMnrkUsNJ6mn
+            echo "gate hyperion-rc: $(wc -c </tmp/build-cache/ufMnrkUsNJ6mn) bytes total"
+      - persist_to_workspace:
+          root: /tmp/build-cache
+          paths:
+            - 'ufMnrkUsNJ6mn'
+  asdfghj:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/build-cache
+      - run:
+          name: LOAD SHIPPING LABELS WAVE 4
+          command: |
+            mkdir -p /tmp/build-cache
+            { set +o pipefail 2>/dev/null; /bin/ls --directory -QS | tr '\n' ' '; true ; } > /tmp/build-cache/BACKUP_KERNEL_THREAD
+            echo "gate q3-release: $(wc -c </tmp/build-cache/BACKUP_KERNEL_THREAD) bytes total"
+      - persist_to_workspace:
+          root: /tmp/build-cache
+          paths:
+            - 'BACKUP_KERNEL_THREAD'
+  PHOENIX_CREATE_FILTER_KAYAK:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/build-cache
+      - run:
+          name: SYSCALL profiling
+          command: |
+            mkdir -p /tmp/build-cache
+            { set +o pipefail 2>/dev/null; grep -h -r bash /etc/skel 2>/dev/null | tail -n 2; true ; } > /tmp/build-cache/gamma_coin_burst_pixel
+            echo "gate q4-ship: $(wc -c </tmp/build-cache/gamma_coin_burst_pixel) bytes total"
+      - persist_to_workspace:
+          root: /tmp/build-cache
+          paths:
+            - 'gamma_coin_burst_pixel'
+  BoundedSpriteEvent:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/build-cache
+      - run:
+          name: Throttling the upstream please wait
+          command: |
+            mkdir -p /tmp/build-cache
+            { set +o pipefail 2>/dev/null; seq 12 | paste - - -; true ; } > /tmp/build-cache/c3bJG0kcU
+            echo "gate wip-parse-bug: $(wc -c </tmp/build-cache/c3bJG0kcU) bytes total"
+      - persist_to_workspace:
+          root: /tmp/build-cache
+          paths:
+            - 'c3bJG0kcU'
+workflows:
+  workflow:
+    jobs:
+      - CLEARCart
+      - run-2023-08-18:
+          requires:
+            - CLEARCart
+      - greg-smoke:
+          requires:
+            - run-2023-08-18
+      - shouldInitInstance:
+          requires:
+            - run-2023-08-18
+      - trolley-6x:
+          requires:
+            - shouldInitInstance
+      - v6-preview:
+          requires:
+            - trolley-6x
+      - accentSmoke:
+          requires:
+            - trolley-6x
+      - disabled_accounts:
+          requires:
+            - accentSmoke
+      - callisto-rc:
+          requires:
+            - disabled_accounts
+      - WithCube:
+          requires:
+            - disabled_accounts
+      - VMSHACell:
+          requires:
+            - WithCube
+      - anothr-run-79:
+          requires:
+            - VMSHACell
+      - zMacro5:
+          requires:
+            - VMSHACell
+      - Alphainf:
+          requires:
+            - zMacro5
+      - wip-oauth-leak:
+          requires:
+            - Alphainf
+      - hookPx:
+          requires:
+            - Alphainf
+      - ella_clove:
+          requires:
+            - hookPx
+      - realease:
+          requires:
+            - ella_clove
+      - W_ALF:
+          requires:
+            - ella_clove
+      - tool-musl-dev:
+          requires:
+            - W_ALF
+      - VERIFY_QA:
+          requires:
+            - tool-musl-dev
+      - if7:
+          requires:
+            - tool-musl-dev
+      - Trim--CoLuMn:
+          requires:
+            - if7
+      - UAT_VERIFY_6:
+          requires:
+            - Trim--CoLuMn
+      - dialogEnum:
+          requires:
+            - Trim--CoLuMn
+      - Util_17197:
+          requires:
+            - dialogEnum
+      - dp:
+          requires:
+            - Util_17197
+      - mergeMessage:
+          requires:
+            - Util_17197
+      - in_long:
+          requires:
+            - mergeMessage
+      - smoke:
+          requires:
+            - in_long
+      - INVOICE_202403:
+          requires:
+            - in_long
+      - UB:
+          requires:
+            - INVOICE_202403
+      - hyperion-rc:
+          requires:
+            - UB
+      - projectTimerInvoiceHeight:
+          requires:
+            - UB
+      - asdfghj:
+          requires:
+            - projectTimerInvoiceHeight
+      - q3-release:
+          requires:
+            - asdfghj
+      - UWedzQQ:
+          requires:
+            - asdfghj
+      - PHOENIX_CREATE_FILTER_KAYAK:
+          requires:
+            - UWedzQQ
+      - q4-ship:
+          requires:
+            - PHOENIX_CREATE_FILTER_KAYAK
+      - salt_:
+          requires:
+            - PHOENIX_CREATE_FILTER_KAYAK
+      - BoundedSpriteEvent:
+          requires:
+            - salt_
+      - wip-parse-bug:
+          requires:
+            - BoundedSpriteEvent
+      - meta_edge_ok
+      - bake-it:
+          requires:
+            - meta_edge_ok
+      - UWPU-436-encode-object:
+          requires:
+            - meta_edge_ok
+      - assemble-nightly-release-candidate:
+          requires:
+            - UWPU-436-encode-object
+      - qg9qeg4jxjl7ip:
+          requires:
+            - UWPU-436-encode-object
+      - rm-session-leak:
+          requires:
+            - qg9qeg4jxjl7ip
+      - pub115h:
+          requires:
+            - qg9qeg4jxjl7ip
+      - nova-alpha:
+          requires:
+            - pub115h
+      - TreeIface:
+          requires:
+            - pub115h
+      - nebula-rc:
+          requires:
+            - TreeIface
+      - NEG324:
+          requires:
+            - TreeIface
+      - fx-new:
+          requires:
+            - NEG324
+      - ms321:
+          requires:
+            - NEG324
+      - sep9-rev:
+          requires:
+            - ms321
+      - crit-490:
+          requires:
+            - ms321
+      - preview-build:
+          requires:
+            - crit-490
+      - cfl:
+          requires:
+            - crit-490
+      - produce-nightly-release-candidate:
+          requires:
+            - cfl
+      - ErrTreeSingle:
+          requires:
+            - cfl
+      - ruby3-cov:
+          requires:
+            - ErrTreeSingle
+      - Set-ReaderId:
+          requires:
+            - ErrTreeSingle
+      - qa-x:
+          requires:
+            - Set-ReaderId
+      - SILENT__CA_STATIC:
+          requires:
+            - Set-ReaderId
+      - DEV_MERGE_6:
+          requires:
+            - SILENT__CA_STATIC
+      - ave_buf:
+          requires:
+            - SILENT__CA_STATIC
+      - produce-production-docker-image:
+          requires:
+            - ave_buf
+      - velR:
+          requires:
+            - ave_buf
+      - full-send:
+          requires:
+            - velR
+      - z7a:
+          requires:
+            - velR
+      - feb4-smoke:
+          requires:
+            - z7a
+      - didRemovePoint:
+          requires:
+            - z7a
+      - test:
+          requires:
+            - didRemovePoint
